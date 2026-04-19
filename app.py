@@ -2,88 +2,111 @@ import sys
 import os
 
 import certifi
-ca = certifi.where()
-
 from dotenv import load_dotenv
+import pandas as pd
+import pymongo
+
+from fastapi import FastAPI, File, UploadFile, Request
+from fastapi.responses import Response
+from fastapi.middleware.cors import CORSMiddleware
+from starlette.responses import RedirectResponse
+from fastapi.templating import Jinja2Templates
+from uvicorn import run as app_run
+
+from networksecurity.exception.exception import NetworkSecurityException
+from networksecurity.pipeline.training_pipeline import TrainingPipeline
+from networksecurity.utils.main_utils.utils import load_object
+from networksecurity.constant.training_pipeline import (
+    DATA_INGESTION_COLLECTION_NAME,
+    DATA_INGESTION_DATABASE_NAME
+)
+
+# ENV SETUP
 load_dotenv()
 mongo_db_url = os.getenv("MONGODB_URL_KEY")
-print(mongo_db_url)
-import pymongo
-from networksecurity.exception.exception import NetworkSecurityException
-from networksecurity.logging.logger import logging
-from networksecurity.pipeline.training_pipeline import TrainingPipeline
 
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi import FastAPI, File, UploadFile,Request
-from uvicorn import run as app_run
-from fastapi.responses import Response
-from starlette.responses import RedirectResponse
-import pandas as pd
+ca = certifi.where()
 
-from networksecurity.utils.main_utils.utils import load_object
-
-from networksecurity.utils.ml_utils.model.estimator import NetworkModel
-
-
+# MONGO
 client = pymongo.MongoClient(mongo_db_url, tlsCAFile=ca)
-
-from networksecurity.constant.training_pipeline import DATA_INGESTION_COLLECTION_NAME
-from networksecurity.constant.training_pipeline import DATA_INGESTION_DATABASE_NAME
-
 database = client[DATA_INGESTION_DATABASE_NAME]
 collection = database[DATA_INGESTION_COLLECTION_NAME]
 
+# FASTAPI APP 
 app = FastAPI()
-origins = ["*"]
 
+# CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-from fastapi.templating import Jinja2Templates
-templates = Jinja2Templates(directory="./templates")
+# Templates
+templates = Jinja2Templates(directory="templates")
 
-@app.get("/", tags=["authentication"])
+# ROUTES
+
+@app.get("/", tags=["Home"])
 async def index():
     return RedirectResponse(url="/docs")
 
-@app.get("/train")
+
+# TRAINING ROUTE
+@app.get("/train", tags=["Training"])
 async def train_route():
     try:
-        train_pipeline=TrainingPipeline()
+        train_pipeline = TrainingPipeline()
         train_pipeline.run_pipeline()
-        return Response("Training is successful")
+        return Response("Training completed successfully")
+
     except Exception as e:
-        raise NetworkSecurityException(e,sys)
-    
-@app.post("/predict")
-async def predict_route(request: Request,file: UploadFile = File(...)):
+        raise NetworkSecurityException(e, sys)
+
+# PREDICTION ROUTE 
+@app.post("/predict", tags=["Prediction"])
+async def predict_route(request: Request, file: UploadFile = File(...)):
     try:
-        df=pd.read_csv(file.file)
-        #print(df)
-        preprocesor=load_object("final_model/preprocessor.pkl")
-        final_model=load_object("final_model/model.pkl")
-        network_model = NetworkModel(preprocessor=preprocesor,model=final_model)
-        print(df.iloc[0])
-        y_pred = network_model.predict(df)
-        print(y_pred)
-        df['predicted_column'] = y_pred
-        print(df['predicted_column'])
-        #df['predicted_column'].replace(-1, 0)
-        #return df.to_json()
-        df.to_csv('prediction_output/output.csv')
-        table_html = df.to_html(classes='table table-striped')
-        #print(table_html)
-        return templates.TemplateResponse("table.html", {"request": request, "table": table_html})
-        
+        # Read CSV
+        df = pd.read_csv(file.file)
+
+        if df.empty:
+            return {"error": "Uploaded file is empty"}
+
+        # Load trained model (contains preprocessor + model)
+        model = load_object("final_model/model.pkl")
+
+        # Optional: column validation
+        if hasattr(model, "feature_names_in_"):
+            missing_cols = [col for col in model.feature_names_in_ if col not in df.columns]
+            if missing_cols:
+                return {"error": f"Missing columns: {missing_cols}"}
+
+        # Predict
+        y_pred = model.predict(df)
+        df["predicted_column"] = y_pred
+
+        # Save output
+        os.makedirs("prediction_output", exist_ok=True)
+        df.to_csv("prediction_output/output.csv", index=False)
+
+        # Convert to HTML
+        table_html = df.to_html(classes="table table-striped")
+
+        return templates.TemplateResponse(
+            "table.html",
+            {
+                "request": request,
+                "table": table_html
+            }
+        )
+
     except Exception as e:
-            raise NetworkSecurityException(e,sys)
+        return {"error": str(e)}
 
-    
-if __name__=="__main__":
-    app_run(app,host="0.0.0.0",port=8000)
 
+# MAIN
+if __name__ == "__main__":
+    app_run(app, host="0.0.0.0", port=8000)

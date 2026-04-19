@@ -33,9 +33,6 @@ from networksecurity.utils.main_utils.utils import (
 from networksecurity.utils.ml_utils.metric.classification_metric import get_classification_score
 
 
-# Initialize DagsHub MLflow
-dagshub.init(repo_owner='abhisinghh72', repo_name='networksecurity', mlflow=True)
-
 
 class ModelTrainer:
 
@@ -49,6 +46,8 @@ class ModelTrainer:
 
     # MLflow Tracking 
     def track_mlflow(self, best_model, classificationmetric):
+        import dagshub
+        dagshub.init(repo_owner='abhisinghh72', repo_name='networksecurity', mlflow=True)
         mlflow.set_registry_uri("https://dagshub.com/abhisinghh72/networksecurity.mlflow")
         tracking_url_type_store = urlparse(mlflow.get_tracking_uri()).scheme
 

@@ -7,4 +7,9 @@ pymongo[srv]==3.6
 scikit-learn
 dill
 pyaml
+mlflow
+dagshub
+fastapi
+uvicorn
+python--multipart
 ##-e .

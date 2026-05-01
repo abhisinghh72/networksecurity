@@ -161,7 +161,7 @@ The pipeline includes:
 ## 🌐 Live API
 
 ```
-http://<EC2-PUBLIC-IP>:8080/docs
+http://13.217.93.214:8080/docs
 ```
 
 Swagger UI for testing endpoints.

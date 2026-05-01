@@ -24,6 +24,7 @@ It includes:
 Data → Pipeline → MLflow → S3 → Docker → ECR → GitHub Actions → EC2 → FastAPI API
 ```
 
+
 ---
 
 ## ⚙️ Tech Stack
@@ -73,6 +74,8 @@ networksecurity/
 ├── Dockerfile
 └── .github/workflows     # CI/CD pipeline
 ```
+<img width="628" height="1599" alt="WhatsApp Image 2026-05-01 at 11 32 55" src="https://github.com/user-attachments/assets/acecb203-201b-4a34-a6b5-b36a69bd2128" />
+
 
 ---
 
@@ -100,6 +103,8 @@ GET /train
 ### Predict  
 POST /predict
 
+<img width="2880" height="1708" alt="WhatsApp Image 2026-05-01 at 11 33 27" src="https://github.com/user-attachments/assets/ab9abdf7-08ce-4f62-bcf6-78ab040e6e14" />
+
 ---
 
 ## 🐳 Docker Setup
@@ -108,11 +113,13 @@ POST /predict
 ```
 docker build -t networksecurity .
 ```
+<img width="2880" height="1720" alt="WhatsApp Image 2026-05-01 at 11 33 27 (1)" src="https://github.com/user-attachments/assets/c45089f4-18f8-4a07-bc67-17c2909b8a98" />
 
 ### Run Container
 ```
 docker run -d -p 8080:8080 networksecurity
 ```
+<img width="2880" height="1725" alt="WhatsApp Image 2026-05-01 at 11 33 28 (1)" src="https://github.com/user-attachments/assets/3ae82d2e-274d-48d1-9f7d-70add1ea247c" />
 
 ---
 
@@ -123,7 +130,9 @@ docker run -d -p 8080:8080 networksecurity
 3. Docker image is built  
 4. Image pushed to AWS ECR  
 5. EC2 pulls latest image  
-6. Container runs automatically  
+6. Container runs automatically
+
+<img width="2880" height="1731" alt="WhatsApp Image 2026-05-01 at 11 33 29" src="https://github.com/user-attachments/assets/d1bcc0da-b7c1-4c56-9638-1c82ac9f21ae" />
 
 ---
 
@@ -135,6 +144,8 @@ The pipeline includes:
 - Push to AWS ECR  
 - Deploy to EC2  
 
+<img width="2880" height="1725" alt="WhatsApp Image 2026-05-01 at 11 33 28 (1)" src="https://github.com/user-attachments/assets/5c1183cd-a7cd-48f7-b485-635fffda7c36" />
+
 ---
 
 ## 📊 Experiment Tracking
@@ -145,7 +156,9 @@ The pipeline includes:
   - Precision
   - Recall
   - F1-score  
-- Enables comparison across multiple runs  
+- Enables comparison across multiple runs
+  
+<img width="2880" height="1735" alt="WhatsApp Image 2026-05-01 at 11 33 28 (2)" src="https://github.com/user-attachments/assets/4e980d11-2678-4f95-ba0a-7ed0547c04ee" />
 
 ---
 
@@ -154,7 +167,9 @@ The pipeline includes:
 - AWS S3 for:
   - Model artifacts  
   - Pipeline outputs  
-  - Versioned storage  
+  - Versioned storage
+    
+<img width="2880" height="1724" alt="WhatsApp Image 2026-05-01 at 11 33 27 (2)" src="https://github.com/user-attachments/assets/d5b5a1bf-d22c-4fe2-9e05-1f4a10b7b844" />
 
 ---
 

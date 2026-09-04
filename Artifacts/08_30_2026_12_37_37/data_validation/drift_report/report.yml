@@ -1,0 +1,93 @@
+Abnormal_URL:
+  drift_status: false
+  p_value: 0.9999522276991981
+DNSRecord:
+  drift_status: false
+  p_value: 0.9910075588657089
+Domain_registeration_length:
+  drift_status: false
+  p_value: 0.9975154378416575
+Favicon:
+  drift_status: false
+  p_value: 0.9999999999999999
+Google_Index:
+  drift_status: false
+  p_value: 1.0
+HTTPS_token:
+  drift_status: false
+  p_value: 0.999999951232593
+Iframe:
+  drift_status: false
+  p_value: 0.9999999998083141
+Links_in_tags:
+  drift_status: false
+  p_value: 0.9891306953350375
+Links_pointing_to_page:
+  drift_status: false
+  p_value: 0.3982974911044752
+Page_Rank:
+  drift_status: false
+  p_value: 0.9999999991566036
+Prefix_Suffix:
+  drift_status: false
+  p_value: 1.0
+Redirect:
+  drift_status: false
+  p_value: 0.999242680717808
+Request_URL:
+  drift_status: false
+  p_value: 0.9862073424027938
+Result:
+  drift_status: false
+  p_value: 0.7331765569350495
+RightClick:
+  drift_status: false
+  p_value: 1.0
+SFH:
+  drift_status: false
+  p_value: 0.9926347991987616
+SSLfinal_State:
+  drift_status: false
+  p_value: 0.9827647476237613
+Shortining_Service:
+  drift_status: false
+  p_value: 1.0
+Statistical_report:
+  drift_status: false
+  p_value: 0.9999913602492586
+Submitting_to_email:
+  drift_status: false
+  p_value: 1.0
+URL_Length:
+  drift_status: false
+  p_value: 0.999999965765894
+URL_of_Anchor:
+  drift_status: false
+  p_value: 0.9263327267082714
+age_of_domain:
+  drift_status: false
+  p_value: 0.9995780975749712
+double_slash_redirecting:
+  drift_status: false
+  p_value: 1.0
+having_At_Symbol:
+  drift_status: false
+  p_value: 0.8531371963713523
+having_IP_Address:
+  drift_status: false
+  p_value: 0.9836762214090502
+having_Sub_Domain:
+  drift_status: false
+  p_value: 0.9977266740617147
+on_mouseover:
+  drift_status: false
+  p_value: 1.0
+popUpWidnow:
+  drift_status: false
+  p_value: 1.0
+port:
+  drift_status: false
+  p_value: 0.999999999993845
+web_traffic:
+  drift_status: false
+  p_value: 0.9703294280424928

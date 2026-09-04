@@ -4,6 +4,7 @@ import os
 import certifi
 from dotenv import load_dotenv
 import pandas as pd
+from networksecurity.utils.ml_utils import model
 import pymongo
 
 from fastapi import FastAPI, File, UploadFile, Request
@@ -12,6 +13,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from starlette.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
 from uvicorn import run as app_run
+from networksecurity.constant.training_pipeline import TARGET_COLUMN
 
 from networksecurity.exception.exception import NetworkSecurityException
 from networksecurity.pipeline.training_pipeline import TrainingPipeline
@@ -67,46 +69,68 @@ async def train_route():
 
 # PREDICTION ROUTE 
 @app.post("/predict", tags=["Prediction"])
-async def predict_route(request: Request, file: UploadFile = File(...)):
+async def predict_route(
+    request: Request,
+    file: UploadFile = File(...)
+):
     try:
+
         # Read CSV
         df = pd.read_csv(file.file)
 
         if df.empty:
             return {"error": "Uploaded file is empty"}
 
-        # Load trained model (contains preprocessor + model)
+        # Load model
         model = load_object("final_model/model.pkl")
 
-        # Optional: column validation
-        if hasattr(model, "feature_names_in_"):
-            missing_cols = [col for col in model.feature_names_in_ if col not in df.columns]
-            if missing_cols:
-                return {"error": f"Missing columns: {missing_cols}"}
+        # Load preprocessor
+        preprocessor = load_object("final_model/preprocessor.pkl")
+
+        # Remove target column if present
+        if TARGET_COLUMN in df.columns:
+            df = df.drop(columns=[TARGET_COLUMN])
+
+        # Transform input
+        x_transformed = preprocessor.transform(df)
 
         # Predict
-        y_pred = model.predict(df)
+        y_pred = model.predict(x_transformed)
+
+        # Add prediction
         df["predicted_column"] = y_pred
 
-        # Save output
+        # Save prediction
         os.makedirs("prediction_output", exist_ok=True)
-        df.to_csv("prediction_output/output.csv", index=False)
+
+        df.to_csv(
+            "prediction_output/output.csv",
+            index=False
+        )
 
         # Convert to HTML
-        table_html = df.to_html(classes="table table-striped")
+        table_html = df.to_html(
+            classes="table table-striped"
+        )
 
+        # Return HTML page
         return templates.TemplateResponse(
-            "table.html",
-            {
+            request=request,
+            name="table.html",
+            context={
                 "request": request,
                 "table": table_html
             }
         )
 
     except Exception as e:
-        return {"error": str(e)}
 
+        import traceback
+        traceback.print_exc()
 
+        return {
+            "error": str(e)
+        }
 # MAIN
 if __name__ == "__main__":
     app_run(app, host="0.0.0.0", port=8080)

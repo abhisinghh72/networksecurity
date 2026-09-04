@@ -1,0 +1,34 @@
+[2026-09-04 11:55:31,471 ] 19 root - INFO - Initiate the data ingestion
+[2026-09-04 11:55:54,780 ] 58 root - INFO - Performed train test split on the dataframe
+[2026-09-04 11:55:54,780 ] 59 root - INFO - exited split_data_as_train_tes method of Data_ingestion class
+[2026-09-04 11:55:54,780 ] 62 root - INFO - Exporting train and test file path.
+[2026-09-04 11:55:54,938 ] 66 root - INFO - Exported train and test file path
+[2026-09-04 11:55:54,938 ] 21 root - INFO - Data Initiation Completed
+[2026-09-04 11:55:54,941 ] 25 root - INFO - Initiate the data Validation
+[2026-09-04 11:55:54,989 ] 38 root - INFO - Expected columns: ['having_IP_Address', 'URL_Length', 'Shortining_Service', 'having_At_Symbol', 'double_slash_redirecting', 'Prefix_Suffix', 'having_Sub_Domain', 'SSLfinal_State', 'Domain_registeration_length', 'Favicon', 'port', 'HTTPS_token', 'Request_URL', 'URL_of_Anchor', 'Links_in_tags', 'SFH', 'Submitting_to_email', 'Abnormal_URL', 'Redirect', 'on_mouseover', 'RightClick', 'popUpWidnow', 'Iframe', 'age_of_domain', 'DNSRecord', 'web_traffic', 'Page_Rank', 'Google_Index', 'Links_pointing_to_page', 'Statistical_report', 'Result']
+[2026-09-04 11:55:54,989 ] 39 root - INFO - Actual columns: ['having_IP_Address', 'URL_Length', 'Shortining_Service', 'having_At_Symbol', 'double_slash_redirecting', 'Prefix_Suffix', 'having_Sub_Domain', 'SSLfinal_State', 'Domain_registeration_length', 'Favicon', 'port', 'HTTPS_token', 'Request_URL', 'URL_of_Anchor', 'Links_in_tags', 'SFH', 'Submitting_to_email', 'Abnormal_URL', 'Redirect', 'on_mouseover', 'RightClick', 'popUpWidnow', 'Iframe', 'age_of_domain', 'DNSRecord', 'web_traffic', 'Page_Rank', 'Google_Index', 'Links_pointing_to_page', 'Statistical_report', 'Result']
+[2026-09-04 11:55:54,989 ] 112 root - INFO - Train column validation PASSED
+[2026-09-04 11:55:54,989 ] 38 root - INFO - Expected columns: ['having_IP_Address', 'URL_Length', 'Shortining_Service', 'having_At_Symbol', 'double_slash_redirecting', 'Prefix_Suffix', 'having_Sub_Domain', 'SSLfinal_State', 'Domain_registeration_length', 'Favicon', 'port', 'HTTPS_token', 'Request_URL', 'URL_of_Anchor', 'Links_in_tags', 'SFH', 'Submitting_to_email', 'Abnormal_URL', 'Redirect', 'on_mouseover', 'RightClick', 'popUpWidnow', 'Iframe', 'age_of_domain', 'DNSRecord', 'web_traffic', 'Page_Rank', 'Google_Index', 'Links_pointing_to_page', 'Statistical_report', 'Result']
+[2026-09-04 11:55:54,989 ] 39 root - INFO - Actual columns: ['having_IP_Address', 'URL_Length', 'Shortining_Service', 'having_At_Symbol', 'double_slash_redirecting', 'Prefix_Suffix', 'having_Sub_Domain', 'SSLfinal_State', 'Domain_registeration_length', 'Favicon', 'port', 'HTTPS_token', 'Request_URL', 'URL_of_Anchor', 'Links_in_tags', 'SFH', 'Submitting_to_email', 'Abnormal_URL', 'Redirect', 'on_mouseover', 'RightClick', 'popUpWidnow', 'Iframe', 'age_of_domain', 'DNSRecord', 'web_traffic', 'Page_Rank', 'Google_Index', 'Links_pointing_to_page', 'Statistical_report', 'Result']
+[2026-09-04 11:55:54,989 ] 118 root - INFO - Test column validation PASSED
+[2026-09-04 11:55:55,130 ] 129 root - INFO - No data drift detected
+[2026-09-04 11:55:55,297 ] 27 root - INFO - data Validation Completed
+[2026-09-04 11:55:55,298 ] 30 root - INFO - data Transformation started
+[2026-09-04 11:55:55,298 ] 66 root - INFO - Entered initiate_data_transformation method of DataTransformation class
+[2026-09-04 11:55:55,298 ] 68 root - INFO - Starting data transformation
+[2026-09-04 11:55:55,343 ] 51 root - INFO - Entered get_data_trnasformer_object method of Trnasformation class
+[2026-09-04 11:55:55,343 ] 56 root - INFO - Initialise KNNImputer with {'missing_values': nan, 'n_neighbors': 3, 'weights': 'uniform'}
+[2026-09-04 11:55:55,503 ] 34 root - INFO - data Transformation completed
+[2026-09-04 11:55:55,503 ] 36 root - INFO - Model Training sstared
+[2026-09-04 12:02:42,868 ] 116 root - INFO - Best Model: Decision Tree with score: 0.9555762806084708
+[2026-09-04 12:02:44,135 ] 1025 httpx - INFO - HTTP Request: GET https://dagshub.com/api/v1/user "HTTP/1.1 200 OK"
+[2026-09-04 12:02:44,162 ] 107 dagshub - INFO - Accessing as abhisinghh72
+[2026-09-04 12:02:45,526 ] 1025 httpx - INFO - HTTP Request: GET https://dagshub.com/api/v1/repos/abhisinghh72/networksecurity "HTTP/1.1 200 OK"
+[2026-09-04 12:02:46,628 ] 1025 httpx - INFO - HTTP Request: GET https://dagshub.com/api/v1/user "HTTP/1.1 200 OK"
+[2026-09-04 12:02:46,631 ] 107 dagshub - INFO - Initialized MLflow to track repo "abhisinghh72/networksecurity"
+[2026-09-04 12:02:46,632 ] 107 dagshub - INFO - Repository abhisinghh72/networksecurity initialized!
+[2026-09-04 12:03:06,912 ] 1025 httpx - INFO - HTTP Request: GET https://dagshub.com/api/v1/repos/abhisinghh72/networksecurity "HTTP/1.1 200 OK"
+[2026-09-04 12:03:06,919 ] 107 dagshub - INFO - Initialized MLflow to track repo "abhisinghh72/networksecurity"
+[2026-09-04 12:03:06,919 ] 107 dagshub - INFO - Repository abhisinghh72/networksecurity initialized!
+[2026-09-04 12:03:32,958 ] 156 root - INFO - Model trainer artifact: ModelTrainerArtifact(trained_model_file_path='Artifacts/09_04_2026_11_55_29/model_trainer/trained_model/model.pkl', train_metric_artifact=ClassificationMetricArtifact(f1_score=0.9908996425764912, precision_score=0.9903222537494933, recall_score=0.9914777050677218), test_metric_artifact=ClassificationMetricArtifact(f1_score=0.9901572805682395, precision_score=0.9876518218623481, recall_score=0.992675483214649))
+[2026-09-04 12:03:32,972 ] 41 root - INFO - Model Training artifact created
